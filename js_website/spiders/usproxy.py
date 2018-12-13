@@ -1,3 +1,6 @@
+import scrapy
+from scrapy_splash import SplashRequest
+
 class UsProxySpider(scrapy.Spider):
     name = 'us_proxy'
 
@@ -8,6 +11,6 @@ class UsProxySpider(scrapy.Spider):
     def parse(self, response):
         for tr in response.xpath("//table[@id='proxylisttable']/tbody/tr"):
             yield {
-                'ip': tr.xpath(".//td[1]/text()"),
-                'port': tr.xpath(".//td[2]/text()")
+                'ip': tr.xpath(".//td[1]/text()").extract_first(),
+                'port': tr.xpath(".//td[2]/text()").extract_first()
             }
